@@ -1,7 +1,7 @@
 {
   "name": "abacl-redis",
   "version": "1.0.0",
-  "description": "Redis ABACL driver.",
+  "description": "Redis driver for ABACL.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
