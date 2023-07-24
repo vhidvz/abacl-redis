@@ -1,4 +1,4 @@
-# Redis Driver
+# ABACL - Redis Driver
 
 [![npm](https://img.shields.io/npm/v/abacl-redis)](https://www.npmjs.com/package/abacl-redis)
 ![npm](https://img.shields.io/npm/dm/abacl-redis)
