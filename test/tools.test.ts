@@ -26,22 +26,20 @@ describe('test redis tools', () => {
   });
 
   it('should return full pattern of policy', () => {
-    expect(pattern({ subject: { val: 'root' } })).toEqual(
-      /abacl:root:null:[^:][^:]*:[^:][^:]*:[^:][^:]*:[^:][^:]*/,
-    );
+    expect(pattern({ subject: { val: 'root' } })).toEqual(/abacl:root:null:[^:]*:[^:]*:[^:]*:[^:]*/);
 
     expect(pattern({ action: { strict: true, val: { main: 'read', scope: 'own' } } })).toEqual(
-      /abacl:[^:][^:]*:[^:][^:]*:read:own:[^:][^:]*:[^:][^:]*/,
+      /abacl:[^:]*:[^:]*:read:own:[^:]*:[^:]*/,
     );
     expect(pattern({ action: { strict: false, val: { main: 'read', scope: 'own' } } })).toEqual(
-      /abacl:[^:][^:]*:[^:][^:]*:read:[^:][^:]*:[^:][^:]*:[^:][^:]*/,
+      /abacl:[^:]*:[^:]*:read:[^:]*:[^:]*:[^:]*/,
     );
 
     expect(pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#' })).toEqual(
-      /abacl#[^#][^#]*#[^#][^#]*#[^#][^#]*#[^#][^#]*#article#published/,
+      /abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/,
     );
     expect(
       pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#', prefix: 'abacl' }),
-    ).toEqual(/abacl#[^#][^#]*#[^#][^#]*#[^#][^#]*#[^#][^#]*#article#published/);
+    ).toEqual(/abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/);
   });
 });

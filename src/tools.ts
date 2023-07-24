@@ -15,7 +15,7 @@ import {
 
 import { DefaultRedisDriverOptions, PREFIX, RedisDriverOptions } from './driver';
 
-export const redisIgnore = (sep: string) => `[^${sep}][^${sep}]*`;
+export const redisIgnore = (sep: string) => `[^${sep}]*`;
 
 export function parse<T = string, M = string, S = string>(
   prop: T,
