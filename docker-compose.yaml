@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    image: bitnami/redis:7.0
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - abacl
+
+networks:
+  abacl:
+    driver: bridge

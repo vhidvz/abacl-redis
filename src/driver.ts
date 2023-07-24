@@ -1,7 +1,7 @@
 import { CacheInterface, CacheInterfaceOptions, CacheKey, OK, Policy, SEP } from 'abacl';
 import { Redis, RedisOptions } from 'ioredis';
 
-import { key, pattern } from './tools.tools';
+import { key, pattern } from './tools';
 
 export const PREFIX = 'abacl';
 export type RedisDriverOptions = CacheInterfaceOptions;
@@ -34,25 +34,25 @@ export class RedisDriver<Sub = string, Act = string, Obj = string> implements Ca
     const p = pattern(cKey, this.options);
 
     const policies: Policy<Sub, Act, Obj>[] = [];
-    for (const index of Object.keys(this.present)) {
-      if (p.test(index)) policies.push(this.present[index]);
-    }
 
+    const keys = await this.instance.keys(p.source);
+    const values = await Promise.all(keys.map((key) => this.instance.get(key)));
+
+    policies.push(...values.filter((val) => val).map((val) => JSON.parse(String(val))));
     return policies;
   }
 
   async set(policy: Policy<Sub, Act, Obj>): Promise<typeof OK> {
-    this.present[key(policy, this.options)] = policy;
-    return OK;
+    return this.instance.set(key(policy, this.options), JSON.stringify(policy));
   }
 
   async del(policy: Policy<Sub, Act, Obj>): Promise<typeof OK> {
-    delete this.present[key(policy, this.options)];
+    await this.instance.del(key(policy, this.options));
     return OK;
   }
 
   async has(policy: Policy<Sub, Act, Obj>): Promise<boolean> {
-    return key(policy, this.options) in this.present;
+    return !!(await this.instance.exists(key(policy, this.options)));
   }
 
   static build<Sub = string, Act = string, Obj = string>(

@@ -1,10 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  ALL,
+  ANY,
+  CacheKey,
+  ControlOptions,
+  NULL,
+  Pattern,
+  Policy,
+  PropType,
+  PropValue,
+  SEP,
+  STRICT,
+} from 'abacl';
+
+import { DefaultRedisDriverOptions, PREFIX, RedisDriverOptions } from './driver';
+
 export const redisIgnore = (sep: string) => `[^${sep}][^${sep}]*`;
 
 export function parse<T = string, M = string, S = string>(
   prop: T,
-  options: MemoryDriverOptions = DefaultMemoryDriverOptions,
+  options: RedisDriverOptions = DefaultRedisDriverOptions,
 ): PropValue<M, S> {
-  options.sep = options.sep ?? SEP;
+  options.sep = options.sep || SEP;
+  options.prefix = options.prefix || PREFIX;
+
   const { sep, prefix } = options;
 
   if (prefix) prop = String(prop).replace(prefix + sep, '') as T;
@@ -14,9 +33,11 @@ export function parse<T = string, M = string, S = string>(
 
 export function key<Sub = string, Act = string, Obj = string>(
   polity: Policy<Sub, Act, Obj>,
-  options: MemoryDriverOptions = DefaultMemoryDriverOptions,
+  options: RedisDriverOptions = DefaultRedisDriverOptions,
 ): string {
-  options.sep = options.sep ?? SEP;
+  options.sep = options.sep || SEP;
+  options.prefix = options.prefix || PREFIX;
+
   const { sep, prefix } = options;
 
   const subject = parse(polity.subject, options);
@@ -33,9 +54,11 @@ export function key<Sub = string, Act = string, Obj = string>(
 
 export function pattern<T = string, M = string, S = string>(
   cKey: CacheKey<T, M, S>,
-  options: MemoryDriverOptions = DefaultMemoryDriverOptions,
+  options: RedisDriverOptions = DefaultRedisDriverOptions,
 ): Pattern {
-  options.sep = options.sep ?? SEP;
+  options.sep = options.sep || SEP;
+  options.prefix = options.prefix || PREFIX;
+
   const { sep, prefix } = options;
 
   const ignore = redisIgnore(sep);
@@ -53,6 +76,6 @@ export function pattern<T = string, M = string, S = string>(
     } else return [ignore, ignore].join(sep);
   };
 
-  if (!prefix) return RegExp(`^${[_pattern('subject'), _pattern('action'), _pattern('object')].join(sep)}$`);
-  else return RegExp(`^${[prefix, _pattern('subject'), _pattern('action'), _pattern('object')].join(sep)}$`);
+  if (!prefix) return RegExp(`${[_pattern('subject'), _pattern('action'), _pattern('object')].join(sep)}`);
+  else return RegExp(`${[prefix, _pattern('subject'), _pattern('action'), _pattern('object')].join(sep)}`);
 }

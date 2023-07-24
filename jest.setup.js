@@ -1,4 +1,2 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-require('dotenv').config();
+// eslint-disable-next-line no-undef
+jest.setTimeout(60000);
