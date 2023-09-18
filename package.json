@@ -33,7 +33,7 @@
   ],
   "homepage": "https://github.com/vhidvz/abacl-redis#readme",
   "peerDependencies": {
-    "abacl": "^7.0.1",
+    "abacl": "^7.1.1",
     "ioredis": "^5.3.2"
   },
   "devDependencies": {
