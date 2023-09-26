@@ -1,6 +1,6 @@
 {
   "name": "abacl-redis",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Redis driver for ABACL.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
   ],
   "homepage": "https://github.com/vhidvz/abacl-redis#readme",
   "dependencies": {
-    "abacl": "^7.2.0",
+    "abacl": "^7.2.1",
     "ioredis": "^5.3.2"
   },
   "devDependencies": {

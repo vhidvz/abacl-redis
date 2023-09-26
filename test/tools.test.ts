@@ -14,14 +14,11 @@ describe('test redis tools', () => {
       'abacl:vahid@wenex.org:null:read:group:articles:all',
     );
 
+    expect(key({ subject: 'vahid@wenex.org', action: 'read', object: 'articles#published' }, { sep: '#' })).toEqual(
+      'abacl#vahid@wenex.org#null#read#any#articles#published',
+    );
     expect(
-      key({ subject: 'vahid@wenex.org', action: 'read', object: 'articles#published' }, { sep: '#' }),
-    ).toEqual('abacl#vahid@wenex.org#null#read#any#articles#published');
-    expect(
-      key(
-        { subject: 'vahid@wenex.org', action: 'read', object: 'articles#published' },
-        { sep: '#', prefix: 'abacl' },
-      ),
+      key({ subject: 'vahid@wenex.org', action: 'read', object: 'articles#published' }, { sep: '#', prefix: 'abacl' }),
     ).toEqual('abacl#vahid@wenex.org#null#read#any#articles#published');
   });
 
@@ -38,8 +35,8 @@ describe('test redis tools', () => {
     expect(pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#' })).toEqual(
       /abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/,
     );
-    expect(
-      pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#', prefix: 'abacl' }),
-    ).toEqual(/abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/);
+    expect(pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#', prefix: 'abacl' })).toEqual(
+      /abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/,
+    );
   });
 });
