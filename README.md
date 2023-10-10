@@ -14,7 +14,7 @@
 ### Installation
 
 ```sh
-npm install --save abacl ioredis abacl-redis
+npm install --save abacl-redis
 ```
 
 ## Use Redis Driver

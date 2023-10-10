@@ -16,9 +16,7 @@ describe('test redis driver', () => {
   });
 
   it('should set policies', async () => {
-    for (const policy of policies) {
-      expect(await driver.set(policy)).toBe(OK);
-    }
+    for (const policy of policies) expect(await driver.set(policy)).toBe(OK);
   });
 
   it('should has policies', async () => {
@@ -28,7 +26,7 @@ describe('test redis driver', () => {
   });
 
   it('should get policies', async () => {
-    const policies = await driver.get({ action: { strict: false, val: { main: 'read', scope: 'own' } } });
+    const policies = await driver.get({ action: { strict: false, main: 'read', scope: 'own' } });
     expect(policies).toHaveLength(3);
   });
 

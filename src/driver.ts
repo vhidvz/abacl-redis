@@ -30,8 +30,8 @@ export class RedisDriver<Sub = string, Act = string, Obj = string> implements Ca
     return OK;
   }
 
-  async get<T = string, M = string, S = string>(cKey: CacheKey<T, M, S>): Promise<Policy<Sub, Act, Obj>[]> {
-    const p = pattern(cKey, this.options);
+  async get(cKey: CacheKey<Sub, Act, Obj>): Promise<Policy<Sub, Act, Obj>[]> {
+    const p = pattern<Sub, Act, Obj>(cKey, this.options);
 
     const policies: Policy<Sub, Act, Obj>[] = [];
 

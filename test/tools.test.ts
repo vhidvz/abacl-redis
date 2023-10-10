@@ -23,19 +23,15 @@ describe('test redis tools', () => {
   });
 
   it('should return full pattern of policy', () => {
-    expect(pattern({ subject: { val: 'root' } })).toEqual(/abacl:root:null:[^:]*:[^:]*:[^:]*:[^:]*/);
+    expect(pattern({ subject: 'root' })).toEqual(/abacl:root:null:[^:]*:[^:]*:[^:]*:[^:]*/);
 
-    expect(pattern({ action: { strict: true, val: { main: 'read', scope: 'own' } } })).toEqual(
-      /abacl:[^:]*:[^:]*:read:own:[^:]*:[^:]*/,
-    );
-    expect(pattern({ action: { strict: false, val: { main: 'read', scope: 'own' } } })).toEqual(
-      /abacl:[^:]*:[^:]*:read:[^:]*:[^:]*:[^:]*/,
-    );
+    expect(pattern({ action: { strict: true, main: 'read', scope: 'own' } })).toEqual(/abacl:[^:]*:[^:]*:read:own:[^:]*:[^:]*/);
+    expect(pattern({ action: { strict: false, main: 'read', scope: 'own' } })).toEqual(/abacl:[^:]*:[^:]*:read:[^:]*:[^:]*:[^:]*/);
 
-    expect(pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#' })).toEqual(
+    expect(pattern({ object: { main: 'article', scope: 'published' } }, { sep: '#' })).toEqual(
       /abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/,
     );
-    expect(pattern({ object: { val: { main: 'article', scope: 'published' } } }, { sep: '#', prefix: 'abacl' })).toEqual(
+    expect(pattern({ object: { main: 'article', scope: 'published' } }, { sep: '#', prefix: 'abacl' })).toEqual(
       /abacl#[^#]*#[^#]*#[^#]*#[^#]*#article#published/,
     );
   });
