@@ -1,6 +1,6 @@
 {
   "name": "abacl-redis",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Redis driver for ABACL.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,9 +9,11 @@
     "prebuild": "rimraf dist",
     "doc": "typedoc --out docs src/",
     "build": "tsc -p ./tsconfig.json",
-    "clean": "rm -rf ./dist && rm -rf ./coverage",
+    "check": "npm run lint && npm run format",
+    "fresh": "npm run check && npm run clean",
     "lint": "eslint . '*/**/*.{js,ts}' --quiet --fix",
     "format": "prettier --write \"(src|test)/**/*.(ts|js)\"",
+    "clean": "rm -rf ./dist && rm -rf ./docs && npm run doc && npm run test",
     "start:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register src/index.ts",
     "test": "jest && make-coverage-badge --report-path docs/coverage/coverage-summary.json --output-path coverage-badge.svg"
   },
@@ -24,6 +26,9 @@
   "bugs": {
     "url": "https://github.com/vhidvz/abacl-redis/issues"
   },
+  "files": [
+    "/dist"
+  ],
   "keywords": [
     "abacl",
     "driver",
@@ -32,9 +37,9 @@
     "abacl-redis-driver"
   ],
   "homepage": "https://github.com/vhidvz/abacl-redis#readme",
-  "dependencies": {
-    "abacl": "^8.0.8",
-    "ioredis": "^5.6.1"
+  "peerDependencies": {
+    "abacl": ">=8.x.x <9",
+    "ioredis": ">=5.x.x <6"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
@@ -59,8 +64,12 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "files": [
-    "/dist"
+  "engines": {
+    "node": ">=20.x.x <22",
+    "npm": "~10.8.2"
+  },
+  "os": [
+    "!win32"
   ],
   "packageManager": "pnpm@10.5.2"
 }

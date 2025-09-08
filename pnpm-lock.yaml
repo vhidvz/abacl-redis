@@ -9,10 +9,10 @@ importers:
   .:
     dependencies:
       abacl:
-        specifier: ^8.0.8
+        specifier: '>=8.x.x <9'
         version: 8.0.8
       ioredis:
-        specifier: ^5.6.1
+        specifier: '>=5.x.x <6'
         version: 5.6.1
     devDependencies:
       '@types/jest':
