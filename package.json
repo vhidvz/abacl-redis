@@ -65,7 +65,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "engines": {
-    "node": ">=20.x.x <22",
+    "node": ">=20.x.x <23",
     "npm": "~10.8.2"
   },
   "os": [
